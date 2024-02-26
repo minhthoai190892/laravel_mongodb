@@ -1,4 +1,8 @@
-git checkout -b 'LARAVEL-MONGODB_Test-connect'
+git checkout -b 'LARAVEL-MONGODB_Test-post-method'
 git add .
-git commit -m 'LARAVEL-MONGODB_Test-connect'
-git push -u origin LARAVEL-MONGODB_Test-connect
+git commit -m 'LARAVEL-MONGODB_Test-post-method'
+git push -u origin LARAVEL-MONGODB_Test-post-method
+
+
+
+php artisan make:model Post
