@@ -81,18 +81,110 @@ Alternative commands :-
     |status| tinyInteger|
 
 3. Run the "php artisan migrate" command to create a posts table
-4. Create Route:-
-   Route::resource('posts', 'App\Http\Controllers\PostController');
-5. Update the "create" function at PostController **_(gọi trang create)_**
+4. Create Route:- **web.php**
+   >Route::resource('posts', 'App\Http\Controllers\PostController');
+
+5. Update the "create" function at **PostController** **_(gọi trang create)_**
+```
+    public function create()
+    {
+        // trả vê trang cần hiển thị
+        return view("posts.create");
+    }
+```
 6. Create a posts folder at /resources/views/ and create a file create.blade.php **_(tạo trang create)_**
 
 7)  Copy content from the register.blade.php file and make changes accordingly. Add title and description fields with the submit button.
-8)  Update store function at PostController:- **_(lưu trữ dữ liệu)_**
-9)  Update the Post model and connect mongodb
+8)  Update __store function__ at **PostController**:- **_(lưu trữ dữ liệu)_**
+    ```
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+        if ($request->isMethod('post')) {
+            # code...
+            $data = $request->all();
+            // echo "<pre>";
+            // print_r($data);
+            // die;
+            $post = new Post;
+            $post->title = $data['title'];
+            $post->description = $data['description'];
+            $post->status =1;
+            $post->save();
+            return redirect()->back()->with('success_message','Post add success');
+
+        }
+    }
+    ```
+
+
+9)  Update the **Post model** and connect mongodb
 
     > use MongoDB\Laravel\Eloquent\Model;
 
+       ```
          //khai báo kết nối vói mongodb
          protected $connection = 'mongodb' ;
+         ```
+
 10) Update create.blade.php file :-
-Show a success message after posting data.
+    Show a success message after posting data.
+
+```
+@if (Session::has('success_message'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Succsess!</strong>{!! session('success_message') !!}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+```
+## MongoDB CRUD Operations | Get data in Laravel from MongoDB
+
+1) Update index function :-
+First of all, we will update **index function** to get posts data from Post collection from MongoDB.
+```
+
+    /**
+     * Display a listing of the resource.
+     * 
+     */
+    public function index()
+    {
+        // lấy dữ liệu
+        $posts = Post::get()->toArray();
+        // hiển thị dữ liệu tạm thời
+        // dd($posts);
+        // trả về tra hiển thị
+        return view('posts.show')->with(compact('posts'));
+    }
+```
+2) Create show.blade.php file :-
+Now create **show.blade.php** file under _/resources/views/posts/_ to display all posts in foreach loop.
+
+
+3) Integrate Datatable :-
+Now we will integrate datatable from below link:
+https://datatables.net/examples/styli...
+
+4) Update app.blade.php file :-
+Now we will include Datatable CSS and JS files in the **app.blade.php** file.
+```
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.css">
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
+
+<script>
+    // hiển thị data trong DataTable
+        $(function () {
+            $("#postsID").DataTable();
+        });
+    </script>
+    
+```

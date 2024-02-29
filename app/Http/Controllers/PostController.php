@@ -9,10 +9,16 @@ class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * 
      */
     public function index()
     {
-        //
+        // lấy dữ liệu
+        $posts = Post::get()->toArray();
+        // hiển thị dữ liệu tạm thời
+        // dd($posts);
+        // trả về tra hiển thị
+        return view('posts.show')->with(compact('posts'));
     }
 
     /**
@@ -20,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        // trả vê trang cần hiển thị
         return view("posts.create");
     }
 

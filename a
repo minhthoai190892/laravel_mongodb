@@ -1,7 +1,7 @@
-git checkout -b 'LARAVEL-MONGODB_Test-post-method'
+git checkout -b 'LARAVEL-MONGODB_show-data'
 git add .
-git commit -m 'LARAVEL-MONGODB_Test-post-method'
-git push -u origin LARAVEL-MONGODB_Test-post-method
+git commit -m 'LARAVEL-MONGODB_show-data'
+git push -u origin LARAVEL-MONGODB_show-data
 
 
 
