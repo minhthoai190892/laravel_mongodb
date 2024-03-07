@@ -15,6 +15,7 @@
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th>Added On</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -25,6 +26,7 @@
                                     <td>{{ $post['title'] }}</td>
                                     <td>{{ $post['description'] }}</td>
                                     <td>{{ date("d-m-Y",strtotime($post['created_at'] ))}}</td>
+                                    <td><a href="{{ url('posts'.$post['_id'].'/edit') }}">Update</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>

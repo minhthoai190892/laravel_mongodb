@@ -1,7 +1,7 @@
-git checkout -b 'LARAVEL-MONGODB_show-data'
+git checkout -b 'LARAVEL-MONGODB_show-data1'
 git add .
-git commit -m 'LARAVEL-MONGODB_show-data'
-git push -u origin LARAVEL-MONGODB_show-data
+git commit -m 'LARAVEL-MONGODB_show-data1'
+git push -u origin LARAVEL-MONGODB_show-data1
 
 
 

@@ -188,3 +188,5 @@ Now we will include Datatable CSS and JS files in the **app.blade.php** file.
     </script>
     
 ```
+
+## Edit data in MongoDB with Laravel
