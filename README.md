@@ -9,37 +9,41 @@
 
 # Laravel - MongoDB
 
-## 1. Create Laravel 10 Project
+## Connect Laravel 10 Project with MongoDB
 
-> composer create-project laravel/laravel test-mongodb
+1.  Create project Laravel
 
-## 2. Install MongoDB Package for Laravel
+    > composer create-project laravel/laravel test-mongodb
 
-[Link Install the MongoDB Package for Laravel](https://www.mongodb.com/compatibility/mongodb-laravel-integration)
+2.  Install MongoDB Package for Laravel
+    [Link Install the MongoDB Package for Laravel](https://www.mongodb.com/compatibility/mongodb-laravel-integration)
 
-> composer require mongodb/laravel-mongodb
+    > composer require mongodb/laravel-mongodb
 
-## 3. Update database.php file:-
+3.  Update **database.php** file:-
 
--   In order for Laravel to communicate with your MongoDB database, update database connection information to the config\database.php file under the “connections” object.
+    In order for Laravel to communicate with your MongoDB database, update database connection information to the config\database.php file under the “connections” object.
+
     > 'mongodb' => [
-            'driver' => 'mongodb',
-            'dsn' => env('DB_URI', 'mongodb+srv://username:password@<atlas-cluster-uri>/myappdb?retryWrites=true&w=majority'),
-            'database' => 'myappdb',
-    ],
+    > 'driver' => 'mongodb',
+    > 'dsn' => env('DB_URI', 'mongodb+srv://username:password@<atlas-cluster-uri>/myappdb?retryWrites=true&w=majority'),
+    > 'database' => 'myappdb',
+    > ],
 
 ## 4. Update .env file:-
 
--   Now, update the .env file to connect with the MongoDB database. Update DB_CONNECTION as mongodb, DB_DATABASE as your database name like laravelmongo in our case and DB_URI as mongodb://localhost:27017
+    Now, update the .env file to connect with the MongoDB database. Update DB_CONNECTION as mongodb, DB_DATABASE as your database name like laravelmongo in our case and DB_URI as mongodb://localhost:27017.
 
-> DB_CONNECTION=mongodb
-> DB_HOST=127.0.0.1
-> DB_PORT=27017
-> DB_DATABASE=laravelmongo
-> DB_USERNAME=
-> DB_PASSWORD=
-> DB_URI=mongodb://localhost:27017
 
+         DB_CONNECTION=mongodb
+         DB_HOST=127.0.0.1
+         DB_PORT=27017
+         DB_DATABASE=laravelmongo
+         DB_USERNAME=
+         DB_PASSWORD=
+         DB_URI=mongodb://localhost:27017
+
+## Register and Login User with Laravel using MongoDB
 ## 5. Run "php artisan migrate"
 
 Run the "php artisan migrate" command to add default auth tables like users in laravelmongo database.
@@ -52,8 +56,9 @@ Finally, test at MongoDB Compass to check if all the default collections includi
     > npm install
     > npm run dev
 
-Alternative commands :-
+## Alternative commands :
 
+    Installation. The Bootstrap and Vue scaffolding provided by Laravel is located in the laravel/ui Composer package, which may be installed using Composer:
 > -   composer require laravel/ui --dev
 > -   php artisan ui bootstrap --auth
 >     or
@@ -82,9 +87,11 @@ Alternative commands :-
 
 3. Run the "php artisan migrate" command to create a posts table
 4. Create Route:- **web.php**
-   >Route::resource('posts', 'App\Http\Controllers\PostController');
+
+    > Route::resource('posts', 'App\Http\Controllers\PostController');
 
 5. Update the "create" function at **PostController** **_(gọi trang create)_**
+
 ```
     public function create()
     {
@@ -92,10 +99,12 @@ Alternative commands :-
         return view("posts.create");
     }
 ```
+
 6. Create a posts folder at /resources/views/ and create a file create.blade.php **_(tạo trang create)_**
 
 7)  Copy content from the register.blade.php file and make changes accordingly. Add title and description fields with the submit button.
-8)  Update __store function__ at **PostController**:- **_(lưu trữ dữ liệu)_**
+8)  Update **store function** at **PostController**:- **_(lưu trữ dữ liệu)_**
+
     ```
     /**
      * Store a newly created resource in storage.
@@ -120,15 +129,16 @@ Alternative commands :-
     }
     ```
 
-
 9)  Update the **Post model** and connect mongodb
 
     > use MongoDB\Laravel\Eloquent\Model;
 
-       ```
-         //khai báo kết nối vói mongodb
-         protected $connection = 'mongodb' ;
-         ```
+    ````
+      //khai báo kết nối vói mongodb
+      protected $connection = 'mongodb' ;
+      ```
+
+    ````
 
 10) Update create.blade.php file :-
     Show a success message after posting data.
@@ -143,15 +153,17 @@ Alternative commands :-
                             </div>
                         @endif
 ```
+
 ## MongoDB CRUD Operations | Get data in Laravel from MongoDB
 
-1) Update index function :-
-First of all, we will update **index function** to get posts data from Post collection from MongoDB.
+1. Update index function :-
+   First of all, we will update **index function** to get posts data from Post collection from MongoDB.
+
 ```
 
     /**
      * Display a listing of the resource.
-     * 
+     *
      */
     public function index()
     {
@@ -163,16 +175,17 @@ First of all, we will update **index function** to get posts data from Post coll
         return view('posts.show')->with(compact('posts'));
     }
 ```
-2) Create show.blade.php file :-
-Now create **show.blade.php** file under _/resources/views/posts/_ to display all posts in foreach loop.
 
+2. Create show.blade.php file :-
+   Now create **show.blade.php** file under _/resources/views/posts/_ to display all posts in foreach loop.
 
-3) Integrate Datatable :-
-Now we will integrate datatable from below link:
-https://datatables.net/examples/styli...
+3. Integrate Datatable :-
+   Now we will integrate datatable from below link:
+   https://datatables.net/examples/styli...
 
-4) Update app.blade.php file :-
-Now we will include Datatable CSS and JS files in the **app.blade.php** file.
+4. Update app.blade.php file :-
+   Now we will include Datatable CSS and JS files in the **app.blade.php** file.
+
 ```
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.css">
 
@@ -186,7 +199,87 @@ Now we will include Datatable CSS and JS files in the **app.blade.php** file.
             $("#postsID").DataTable();
         });
     </script>
-    
+
 ```
 
 ## Edit data in MongoDB with Laravel
+
+1. Update **show.blade.php** file :-
+   First of all, we will update the **show.blade.php** file to add an "Update" link with every post with post id.
+    > <td><'a href="{{ url('posts/' . $post['_id'] . '/edit') }}">Update</a></td>
+
+2) Update edit function:-
+   Now, we will update the edit function at **PostController** to get the post data from post \_id and send it to the post edit form we will create in our next step.
+
+    ```
+
+     /**
+      * Show the form for editing the specified resource.
+      */
+     public function edit(Post $post)
+     {
+         //!TODO: test thông tin bài post
+         // echo $post['_id'];die;
+         //!TODO: tìm bài post trong csdl
+         $postDetails = Post::find($post['id']);
+         //!TODO: dùng để kiểm tra mảng bài post
+         // dd($postDetail);
+         return view('posts.edit')->with(compact('postDetails'));
+     }
+    ```
+
+3) Create **edit.blade.php** file :-
+   Now we will create an **edit.blade.php** file at _/resources/views/posts/_ folder and show the current post title and description in edit post form. Also, add the Laravel PUT method
+
+    ## config
+
+    ```
+    <form method="POST" action="{{ route('posts.update',[$postDetails['_id']]) }}">
+    @csrf
+      {{-- thây đổi sang phương thuc PUT --}}
+        @if (isset($postDetails['_id'])) @method('PUT') @endif
+
+      <input value="{{ $postDetails['title'] }}"></input>
+       <textarea id="description" type="description"
+            class="form-control @error('description') is-invalid @endename="description"
+            rows="10" required>
+             {{ $postDetails['description'] }}
+        </textarea>
+        ....
+    </form>
+    ```
+
+4) Update update function:-
+   Now, we will update the "update" function to finally edit the post. We will get the post data in the put method and write the Laravel query to update it.
+    ```
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Post $post)
+    {
+        //!TODO: xem dữ liệu trước update
+        echo $post;
+        echo '--';
+        if ($request->isMethod('PUT')) {
+            //!TODO: lấy dữ liệu được update
+            $data = $request->all();
+            //!TODO: kiểm tra dữ liệu sau update
+            // echo "<pre>";print_r($data);die;
+            //!TODO: UPdate vào database
+            Post::where('_id', $post['_id'])->update(['title' => $data['title'], 'description' => $data['description']]);
+            //!TODO: hiển thị trang show với message
+            return redirect('/posts')->with('success_message','Post updated successfully');
+        }
+    }
+    ```
+5) Update **show.blade.php** to show message
+    ```
+    @if (Session::has('success_message'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Succsess!</strong>{!! session('success_message') !!}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    ```
