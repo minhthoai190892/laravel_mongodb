@@ -25,10 +25,11 @@
     In order for Laravel to communicate with your MongoDB database, update database connection information to the config\database.php file under the “connections” object.
 
     > 'mongodb' => [
-    > 'driver' => 'mongodb',
-    > 'dsn' => env('DB_URI', 'mongodb+srv://username:password@<atlas-cluster-uri>/myappdb?retryWrites=true&w=majority'),
-    > 'database' => 'myappdb',
-    > ],
+    >
+    > > 'driver' => 'mongodb',
+    > > 'dsn' => env('DB_URI', 'mongodb+srv://username:password@<atlas-cluster-uri>/myappdb?retryWrites=true&w=majority'),
+    > > 'database' => 'myappdb',
+    > > ],
 
 ## 4. Update .env file:-
 
@@ -44,6 +45,7 @@
          DB_URI=mongodb://localhost:27017
 
 ## Register and Login User with Laravel using MongoDB
+
 ## 5. Run "php artisan migrate"
 
 Run the "php artisan migrate" command to add default auth tables like users in laravelmongo database.
@@ -59,6 +61,7 @@ Finally, test at MongoDB Compass to check if all the default collections includi
 ## Alternative commands :
 
     Installation. The Bootstrap and Vue scaffolding provided by Laravel is located in the laravel/ui Composer package, which may be installed using Composer:
+
 > -   composer require laravel/ui --dev
 > -   php artisan ui bootstrap --auth
 >     or
@@ -282,4 +285,36 @@ Finally, test at MongoDB Compass to check if all the default collections includi
             </button>
         </div>
     @endif
+    ```
+
+# MongoDB CRUD Operations | Delete data in MongoDB with Laravel
+
+1. Update **show.blade.php** file :-
+   First of all, we will update <a href='resources\views\posts\show.blade.php'>show.blade.php</a> file to add "Delete" button with every post with post id. We will also add button for "Update" and will use form for deleting post as this is the correct way to do in resource controller.
+    ```
+     <form action="{{ route('posts.destroy', ['post' => $post['_id']]) }}"
+        method="POST" style="float: right;margin-left: 10px">
+         @csrf @method('delete')
+         <button type="submit" class="btn btn-primary btn-block">Delete</button>
+     </form>
+    ```
+
+2) Update **destroy** function :-
+   Now, we will update **destroy** function at <a href='app\Http\Controllers\PostController.php'>PostController</a> to delete the post from post \_id and redirect to posts page with success message.
+    ```
+      /**
+      * Remove the specified resource from storage.
+      * @param Post $post cần một bài đăng để xóa
+      */
+     public function destroy(Post $post)
+     {
+         // xem dữ liệu cần xóa
+         // echo($post);die;
+         // kiểm tra id bài đăng
+         if (isset($post['_id'])) {
+             // kiểm tra id bài đăng trong csdl có giống với id cần xóa không
+             Post::where('_id', $post['_id'])->delete();
+             return redirect('/posts')->with('success_message', 'Post deleted successfully');
+         }
+     }
     ```

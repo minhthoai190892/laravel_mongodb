@@ -1,22 +1,22 @@
-git checkout -b 'LARAVEL-MONGODB_Edit-data-in-MongoDB-with-Laravel'
+git checkout -b 'LARAVEL-MONGODB_MongoDB-CRUD-Operations-Delete-data-in-MongoDB-with-Laravel'
 git add .
-git commit -m 'LARAVEL-MONGODB_Edit-data-in-MongoDB-with-Laravel'
-git push -u origin LARAVEL-MONGODB_Edit-data-in-MongoDB-with-Laravel
+git commit -m 'LARAVEL-MONGODB_MongoDB-CRUD-Operations-Delete-data-in-MongoDB-with-Laravel'
+git push -u origin LARAVEL-MONGODB_MongoDB-CRUD-Operations-Delete-data-in-MongoDB-with-Laravel
 
 
 - create project laravel
-  composer create-project laravel/laravel test-mongodb
+    composer create-project laravel/laravel test-mongodb
 - install package mongoDb
-  composer require mongodb/laravel-mongodb
--   Run of node
-     npm install
-     npm run dev
+    composer require mongodb/laravel-mongodb
+- Run of node
+    npm install
+    npm run dev
 - render ui
-  composer require laravel/ui --dev
-  php artisan ui bootstrap --auth
-  or
-  php artisan ui vue --auth
+    composer require laravel/ui --dev
+    php artisan ui bootstrap --auth
+    or
+    php artisan ui vue --auth
 - create model
-  php artisan make:model Post
+    php artisan make:model Post
 - create table
-  php artisan migrate
+    php artisan migrate
